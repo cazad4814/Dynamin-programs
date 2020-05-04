@@ -1,0 +1,155 @@
+class Solution {
+    public String shortestCommonSupersequence(String str1, String str2) {
+       
+        
+        
+        int n=str1.length();
+        int m=str2.length();
+        int t[][]=new int[n+1][m+1];
+        
+        
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<m+1;j++){
+                if(i==0 || j==0){
+                    t[i][j]=0;
+                }
+                if(i>0 && j>0){
+                    if(str1.charAt(i-1)==str2.charAt(j-1)){
+                        t[i][j]=1+t[i-1][j-1];
+                    }else{
+                        t[i][j]=Math.max(t[i-1][j],t[i][j-1]);
+                    }
+                }
+            }
+        }
+                     
+        // int leng=str1.length()+str2.length()-t[n][m];
+            StringBuffer bf = new StringBuffer("");
+         //char[] res=new char[leng];
+       // String res="";
+                       int i=n;
+                       int j=m;
+                      while(i>0 && j>0){
+                           if(str1.charAt(i-1)==str2.charAt(j-1)){
+                              // res[leng-1]=str1.charAt(i-1);
+                                bf.append(str1.charAt(i-1));
+                               i--;
+                               j--;
+                               //leng--;
+                           }else if(t[i][j-1]>t[i-1][j]){
+                                    //res[leng-1]=str2.charAt(j-1);
+                                      bf.append(str2.charAt(j-1));
+                                   // leng--;
+                                   j--;
+                               }else{
+                                  // res[leng-1]=str1.charAt(i-1);
+                                      bf.append(str1.charAt(i-1));
+                                   //  leng--;
+                                     i--; 
+                               }
+                               
+                               
+                           }
+                           
+                      
+        while(j>0){
+             // res[leng-1]=str2.charAt(j-1);
+               bf.append(str2.charAt(j-1));
+            j--;
+           // leng--;
+        }
+          while(i>0){
+             // res[leng-1]=str1.charAt(i-1);
+                 bf.append(str1.charAt(i-1));
+            i--;
+            //leng--;
+        }
+              return bf.reverse().toString();
+        
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+or......................
+
+class Solution {
+    public String shortestCommonSupersequence(String str1, String str2) {
+        int n=str1.length();
+        int m=str2.length();
+        int dp[][]=new int[n+1][m+1];
+        for(int i=0;i<=n;i++)
+        {
+            for(int j=0;j<=m;j++)
+            {
+                if(i==0 || j==0)
+                {
+                    dp[i][j]=0;
+                }
+                else if(str1.charAt(i-1)==str2.charAt(j-1))
+                {
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else
+                {
+                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        StringBuffer bf = new StringBuffer("");
+        int i=n;
+        int j=m;
+        while(i>0 && j>0)
+        {
+            if(str1.charAt(i-1)==str2.charAt(j-1))
+            {
+                bf.append(str1.charAt(i-1));
+                i--;
+                j--;
+            }
+            else if(dp[i][j-1]>dp[i-1][j])
+            {
+                bf.append(str2.charAt(j-1));
+                j--;
+            }
+            else
+            {
+                bf.append(str1.charAt(i-1));
+                i--;
+            }
+        }
+        while(i>0)
+        {
+            bf.append(str1.charAt(i-1));
+            i--;
+        }
+        while(j>0)
+        {
+            bf.append(str2.charAt(j-1));
+            j--;
+        }
+        return bf.reverse().toString();
+        
+    }
+}
